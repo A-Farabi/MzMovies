@@ -22,8 +22,8 @@ function Header() {
                     </div>
                     <div className="navbar-center hidden lg:flex">
                         <ul className="menu menu-horizontal px-1">
-                            <li><a>Item 1</a></li>
-                            <li><a>Item 2</a></li>
+                            <li><a>Links 1</a></li>
+                            <li><a>Links 2</a></li>
                         </ul>
                     </div>
                     <div className="navbar-end">
