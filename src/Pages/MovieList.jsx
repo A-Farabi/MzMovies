@@ -18,22 +18,27 @@ function MovieList() {
       .finally(() => setloading(false))
   }, [])
   return (
-    <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-8 gap-6'>
+    <div className='p-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 gap-6'>
       {movies.map((movie) => (
         <div key={movie.id} className='card bg-black shadow-xl'>
           <figure className='relative h-[220px] w-full'>
             <img src={movie.image.medium} alt={movie.name} className='w-full h-full object-cover'></img>
-          <div className='absolute bottom-0 right-0 bg-black/80 p-1'>
-<span className='text-yellow-400'>★ {movie.rating?.average || 'N/A'}</span>
-          </div>
+            <div className='absolute bottom-0 right-0 bg-black/80 p-1'>
+              <span className='text-yellow-400'>★ {movie.rating?.average || 'N/A'}</span>
+            </div>
           </figure>
-          <div className='p-2'>
-            <h3 className='text-lg text-white truncate' title={movie.name}>
-              {movie.name}
-            </h3>
-            <p className='text-gray-500 text-sm'>
-              {movie.premiered ? movie.premiered.split('-')[0] : 'Unknown Year'}
-            </p>
+          <div className='flex justify-between items-center'>
+            <div className=''>
+              <h3 className='text-xs text-white truncate text-wrap' title={movie.name}>
+                {movie.name}
+              </h3>
+              <p className='text-gray-500 text-sm'>
+                {movie.premiered ? movie.premiered.split('-')[0] : 'Unknown Year'}
+              </p>
+            </div>
+            <div>
+              <button className='btn btn-xs'>See Details</button>
+            </div>
           </div>
         </div>
       ))}
