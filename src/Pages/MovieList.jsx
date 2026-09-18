@@ -4,6 +4,8 @@ function MovieList() {
   const [movies, setMovies] = useState([])
   const [error, setError] = useState("")
   const [loading, setloading] = useState(true)
+  const [selectedMovie, setSelectedMovie] = useState(null)
+
   console.log(movies)
 
   useEffect(() => {
@@ -17,6 +19,20 @@ function MovieList() {
       .catch(error => setError(error.message))
       .finally(() => setloading(false))
   }, [])
+
+  if (loading) {
+    return <div className="text-white p-10">Loading...</div>
+  }
+
+  if (error) {
+    return <div className="text-red-500 p-10">Error: {error}</div>
+  }
+
+  const handleModal = (movie) =>{
+    setSelectedMovie(movie)
+    document.getElementById('my_modal_1').showModal()
+  }
+
   return (
     <div className='p-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 gap-6'>
       {movies.map((movie) => (
@@ -37,11 +53,66 @@ function MovieList() {
               </p>
             </div>
             <div>
-              <button className='btn btn-xs'>See Details</button>
+              <button className='btn btn-xs' onClick={() => handleModal(movie)}>See Details</button>
             </div>
           </div>
         </div>
       ))}
+      {/* modal fn */}
+      <dialog id="my_modal_1" className="modal">
+        <div className="modal-box max-w-2xl bg-neutral text-neutral-content">
+          {selectedMovie && (
+            <>
+              <form method="dialog">
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-amber-50 hover:text-black">✕</button>
+              </form>
+
+              <div className="flex flex-col md:flex-row gap-4">
+                <img
+                  src={selectedMovie.image?.medium || 'https://via.placeholder.com/210x295?text=No+Image'}
+                  alt={selectedMovie.name}
+                  className="w-full md:w-48 rounded-lg object-cover"
+                />
+                <div className="flex-1">
+                  <h3 className="font-bold text-2xl">{selectedMovie.name}</h3>
+
+                  <div className="flex flex-wrap gap-3 mt-2 text-sm">
+                    <span className="text-yellow-400 font-bold">
+                      ★ {selectedMovie.rating?.average || 'N/A'}
+                    </span>
+                    <span className="text-gray-400">
+                      📅 {selectedMovie.premiered || 'Unknown'}
+                    </span>
+                    <span className="text-gray-400">
+                      🌐 {selectedMovie.language || 'N/A'}
+                    </span>
+                    <span className="text-gray-400">
+                      📺 {selectedMovie.status || 'N/A'}
+                    </span>
+                  </div>
+
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {selectedMovie.genres?.map((g, i) => (
+                      <span key={i} className="badge badge-outline badge-sm">{g}</span>
+                    ))}
+                  </div>
+
+                  <div
+                    className="py-3 text-sm text-gray-300"
+                    dangerouslySetInnerHTML={{
+                      __html: selectedMovie.summary || 'No summary available.'
+                    }}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+        {/* modal close fn */}
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </div>
   )
 }
