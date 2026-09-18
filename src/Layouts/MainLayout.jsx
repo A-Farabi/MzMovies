@@ -6,8 +6,8 @@ import Footer from '../Components/Footer'
 
 function MainLayout() {
   return (
-    <div>
-        <Header></Header>
+    <div className='bg-black'>
+      <Header></Header>
       <Outlet></Outlet>
       <Footer></Footer>
     </div>
