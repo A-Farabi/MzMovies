@@ -11,19 +11,21 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
-    children:[
-      {index:true,
-        element:<Home></Home>
-       },
-      {path: "/MovieList",
-        element:<MovieList></MovieList>
-       },
+    children: [
+      {
+        index: true,
+        element: <Home></Home>
+      },
+      {
+        path: "/movieList",
+        element: <MovieList></MovieList>
+      },
     ]
   },
 ]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-   <RouterProvider router={router} />,
+    <RouterProvider router={router} />,
   </StrictMode>,
 )
